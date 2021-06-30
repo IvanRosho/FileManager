@@ -1,0 +1,83 @@
+﻿<Window x:Class="FileManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:FileManager="clr-namespace:FileManager"
+        xmlns:Res="clr-namespace:FileManager.Properties"
+        Title="ByNet File Manager TRIAL" Height="500" Width="750" MinWidth="750" MinHeight="500" SizeChanged="Window_SizeChanged" ResizeMode="CanResizeWithGrip" Icon="/ByNet%20File%20Manager;component/Folder.bmp">
+    <Grid Background="#1800FF00" DataContext="{Binding}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="150"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="12" Name="LeftPanel" Width="Auto" DataContext="{Binding}" Background="#140000FF">
+            <Label Content="Choose disk:" Height="28" Name="LeftLabel" />
+            <ComboBox Height="23" Name="LeftDrives" Width="Auto" Margin="5,0" ItemsSource="{Binding Path=ListDrive, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="LeftDrives_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=VolumeLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text=": "/>
+                            <TextBlock Text="{Binding Path=Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <WrapPanel Height="Auto" Name="LeftWrap" Width="Auto" Margin="5">
+                <Button Content="Up" Margin="0,0,5,0" Click="ButtonLeftUp_Click"></Button>
+                <Button Content="Down" Margin="0,0,5,0" Click="LeftDownClick"></Button>
+            </WrapPanel>
+            <Label Name="LeftPath" Content="{Binding Path=Path, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Stretch" />
+            <ScrollViewer Height="331" Margin ="5" HorizontalScrollBarVisibility="Auto" Padding="0" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Name="LeftScroll" CanContentScroll="True">
+                <ListView Height="Auto"  Name="LeftList" Width="Auto" ItemsSource="{Binding Path=Dir, UpdateSourceTrigger=PropertyChanged}" MouseDoubleClick="LeftDownClick">
+                    <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel>
+                                <Label Content="{Binding Path=Type, UpdateSourceTrigger=PropertyChanged}" Panel.ZIndex="1" Background="#CDFFFFFF"></Label>
+                                <Label Content="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0" Panel.ZIndex="1" Background="#CDFFFFFF"></Label>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                </ListView>
+            </ScrollViewer>
+        </StackPanel>
+        <StackPanel Grid.Column="2" HorizontalAlignment="Stretch" Margin="12" Name="RightPanel" VerticalAlignment="Stretch" Width="Auto" Background="#140000FF">
+            <Label Content="Choose disk:" Height="28" Name="RightLabel" />
+            <ComboBox Height="23" Name="RightDrives" Width="Auto" Margin="5,0" ItemsSource="{Binding Path=ListDrive, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="RightDrives_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=VolumeLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text=": "/>
+                            <TextBlock Text="{Binding Path=Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <WrapPanel Height="Auto" Name="RightWrap" Width="Auto" Margin="5">
+                <Button Content="Up" Margin="0,0,5,0" Click="ButtonRightUp_Click"></Button>
+                <Button Content="Down" Margin="0,0,5,0" Click="RightDownClick"></Button>
+            </WrapPanel>
+            <Label Name="RightPath" Content="{Binding Path=Path, UpdateSourceTrigger=PropertyChanged}" />
+            <ScrollViewer Height="332" Margin ="5" UseLayoutRounding="False" HorizontalScrollBarVisibility="Auto" Name="RightScroll">
+                <ListView Height="Auto"  Name="RightList" Width="Auto" ItemsSource="{Binding Path=Dir, UpdateSourceTrigger=PropertyChanged}" MouseDoubleClick="RightDownClick">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <WrapPanel>
+                                <Label Content="{Binding Path=Type, UpdateSourceTrigger=PropertyChanged}" Panel.ZIndex="1" Background="#CDFFFFFF"></Label>
+                                <Label Content="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0" Panel.ZIndex="1" Background="#CDFFFFFF"></Label>
+                            </WrapPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollViewer>
+        </StackPanel>
+        <Button Content="Refresh Disks" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="0,40,0,0" Name="button1" VerticalAlignment="Top" Width="150" Click="button1_Click" />
+        <Button Content="-> Move ->" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="0,129,0,0" Name="MoveButton" VerticalAlignment="Top" Width="150" Click="MoveButton_Click" />
+        <Button Content="-> Copy -> " Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="0,159,0,0" Name="CopyButton" VerticalAlignment="Top" Width="150" Click="CopyButton_Click" />
+        <Button Content="-> Delete" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="0,189,0,0" Name="DeleteButton" VerticalAlignment="Top" Width="150" Click="DeleteButton_Click" />
+    </Grid>
+</Window>
